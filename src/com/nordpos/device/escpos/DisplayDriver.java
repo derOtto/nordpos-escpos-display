@@ -54,7 +54,9 @@ public class DisplayDriver implements DisplayInterface {
                     iPrinterSerialPortDataBits = SerialPortParameters.getDataBits(sp.nextToken(','));
                     iPrinterSerialPortStopBits = SerialPortParameters.getStopBits(sp.nextToken(','));
                     iPrinterSerialPortParity = SerialPortParameters.getParity(sp.nextToken(','));
-                    return new DeviceDisplayESCPOS(new WritterRXTX(sPrinterParam2, iPrinterSerialPortSpeed, iPrinterSerialPortDataBits, iPrinterSerialPortStopBits, iPrinterSerialPortParity), new UnicodeTranslatorInt());
+                    UnicodeTranslatorInt traslator = new UnicodeTranslatorInt();
+                    traslator.setCodeTable(new byte[] {0x1B, 0x74, 0x01});
+                    return new DeviceDisplayESCPOS(new WritterRXTX(sPrinterParam2, iPrinterSerialPortSpeed, iPrinterSerialPortDataBits, iPrinterSerialPortStopBits, iPrinterSerialPortParity), traslator);
                 } else {
                     return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), new UnicodeTranslatorInt());
                 }
