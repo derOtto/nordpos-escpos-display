@@ -24,6 +24,8 @@ import com.nordpos.device.traslator.UnicodeTranslatorInt;
 import com.nordpos.device.DisplayInterface;
 import com.nordpos.device.display.DeviceDisplay;
 import com.nordpos.device.display.DeviceDisplayNull;
+import com.nordpos.device.display.DeviceDisplayPanel;
+import com.nordpos.device.display.DeviceDisplayWindow;
 import com.nordpos.device.writter.WritterFile;
 import com.nordpos.device.writter.WritterRXTX;
 import com.nordpos.device.util.SerialPortParameters;
@@ -55,11 +57,15 @@ public class DisplayDriver implements DisplayInterface {
                     iPrinterSerialPortStopBits = SerialPortParameters.getStopBits(sp.nextToken(','));
                     iPrinterSerialPortParity = SerialPortParameters.getParity(sp.nextToken(','));
                     UnicodeTranslatorInt traslator = new UnicodeTranslatorInt();
-                    traslator.setCodeTable(new byte[] {0x1B, 0x74, 0x01});
+                    traslator.setCodeTable(new byte[]{0x1B, 0x74, 0x01});
                     return new DeviceDisplayESCPOS(new WritterRXTX(sPrinterParam2, iPrinterSerialPortSpeed, iPrinterSerialPortDataBits, iPrinterSerialPortStopBits, iPrinterSerialPortParity), traslator);
                 } else {
                     return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), new UnicodeTranslatorInt());
                 }
+            case "screen":
+                return new DeviceDisplayPanel();
+            case "window":
+                return new DeviceDisplayWindow();
             default:
                 return new DeviceDisplayNull();
         }
