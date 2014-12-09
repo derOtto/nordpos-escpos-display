@@ -26,6 +26,7 @@ import com.nordpos.device.display.DeviceDisplay;
 import com.nordpos.device.display.DeviceDisplayNull;
 import com.nordpos.device.display.DeviceDisplayPanel;
 import com.nordpos.device.display.DeviceDisplayWindow;
+import com.nordpos.device.traslator.UnicodeTranslator;
 import com.nordpos.device.writter.WritterFile;
 import com.nordpos.device.writter.WritterRXTX;
 import com.nordpos.device.util.SerialPortParameters;
@@ -38,6 +39,9 @@ import com.nordpos.device.util.StringParser;
  */
 public class DisplayDriver implements DisplayInterface {
 
+    public static final byte[] CODE_TABLE_INT = {0x1B, 0x74, 0x01};
+    public static final byte[] CODE_TABLE_RUS = {0x1B, 0x63, 0x52};
+
     @Override
     public DeviceDisplay getDisplay(String sProperty) throws Exception {
         StringParser sp = new StringParser(sProperty);
@@ -48,19 +52,32 @@ public class DisplayDriver implements DisplayInterface {
         Integer iPrinterSerialPortDataBits;
         Integer iPrinterSerialPortStopBits;
         Integer iPrinterSerialPortParity;
+        UnicodeTranslator traslator;
 
         switch (sPrinterType) {
             case "epson":
+                traslator = new UnicodeTranslatorInt();
+                traslator.setCodeTable(CODE_TABLE_INT);
                 if ("rxtx".equals(sPrinterParam1) || "serial".equals(sPrinterParam1)) {
                     iPrinterSerialPortSpeed = SerialPortParameters.getSpeed(sp.nextToken(','));
                     iPrinterSerialPortDataBits = SerialPortParameters.getDataBits(sp.nextToken(','));
                     iPrinterSerialPortStopBits = SerialPortParameters.getStopBits(sp.nextToken(','));
                     iPrinterSerialPortParity = SerialPortParameters.getParity(sp.nextToken(','));
-                    UnicodeTranslatorInt traslator = new UnicodeTranslatorInt();
-                    traslator.setCodeTable(new byte[]{0x1B, 0x74, 0x01});
                     return new DeviceDisplayESCPOS(new WritterRXTX(sPrinterParam2, iPrinterSerialPortSpeed, iPrinterSerialPortDataBits, iPrinterSerialPortStopBits, iPrinterSerialPortParity), traslator);
                 } else {
-                    return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), new UnicodeTranslatorInt());
+                    return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), traslator);
+                }
+            case "epson.cp866":
+                traslator = new UnicodeTranslatorCp866();
+                traslator.setCodeTable(CODE_TABLE_RUS);
+                if ("rxtx".equals(sPrinterParam1) || "serial".equals(sPrinterParam1)) {
+                    iPrinterSerialPortSpeed = SerialPortParameters.getSpeed(sp.nextToken(','));
+                    iPrinterSerialPortDataBits = SerialPortParameters.getDataBits(sp.nextToken(','));
+                    iPrinterSerialPortStopBits = SerialPortParameters.getStopBits(sp.nextToken(','));
+                    iPrinterSerialPortParity = SerialPortParameters.getParity(sp.nextToken(','));                    
+                    return new DeviceDisplayESCPOS(new WritterRXTX(sPrinterParam2, iPrinterSerialPortSpeed, iPrinterSerialPortDataBits, iPrinterSerialPortStopBits, iPrinterSerialPortParity), traslator);
+                } else {
+                    return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), traslator);
                 }
             case "screen":
                 return new DeviceDisplayPanel();
