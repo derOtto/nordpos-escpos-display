@@ -21,7 +21,7 @@
 package com.nordpos.device.escpos;
 
 import com.nordpos.device.traslator.UnicodeTranslatorInt;
-import com.nordpos.device.DisplayInterface;
+import com.nordpos.device.display.DisplayInterface;
 import com.nordpos.device.display.DeviceDisplay;
 import com.nordpos.device.display.DeviceDisplayNull;
 import com.nordpos.device.display.DeviceDisplayPanel;
