@@ -68,9 +68,21 @@ public class DisplayDriver implements DisplayInterface {
                 } else {
                     return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), traslator);
                 }
-            case "epson.cp866":
+            case "epson.cp866.rus":
                 traslator = new UnicodeTranslatorCp866();
                 traslator.setCodeTable(CODE_TABLE_RUS);
+                if ("rxtx".equals(sPrinterParam1) || "serial".equals(sPrinterParam1)) {
+                    iPrinterSerialPortSpeed = SerialPortParameters.getSpeed(sp.nextToken(','));
+                    iPrinterSerialPortDataBits = SerialPortParameters.getDataBits(sp.nextToken(','));
+                    iPrinterSerialPortStopBits = SerialPortParameters.getStopBits(sp.nextToken(','));
+                    iPrinterSerialPortParity = SerialPortParameters.getParity(sp.nextToken(','));
+                    return new DeviceDisplayESCPOS(new WritterRXTX(sPrinterParam2, iPrinterSerialPortSpeed, iPrinterSerialPortDataBits, iPrinterSerialPortStopBits, iPrinterSerialPortParity), traslator);
+                } else {
+                    return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), traslator);
+                }
+            case "epson.cp866.7":
+                traslator = new UnicodeTranslatorCp866();
+                traslator.setCodeTable(CODE_TABLE_7);
                 if ("rxtx".equals(sPrinterParam1) || "serial".equals(sPrinterParam1)) {
                     iPrinterSerialPortSpeed = SerialPortParameters.getSpeed(sp.nextToken(','));
                     iPrinterSerialPortDataBits = SerialPortParameters.getDataBits(sp.nextToken(','));
