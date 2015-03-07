@@ -24,8 +24,6 @@ import com.nordpos.device.traslator.UnicodeTranslatorInt;
 import com.nordpos.device.display.DisplayInterface;
 import com.nordpos.device.display.DeviceDisplay;
 import com.nordpos.device.display.DeviceDisplayNull;
-import com.nordpos.device.display.DeviceDisplayPanel;
-import com.nordpos.device.display.DeviceDisplayWindow;
 import com.nordpos.device.traslator.UnicodeTranslator;
 import com.nordpos.device.writter.WritterFile;
 import com.nordpos.device.writter.WritterRXTX;
@@ -92,10 +90,6 @@ public class DisplayDriver implements DisplayInterface {
                 } else {
                     return new DeviceDisplayESCPOS(new WritterFile(sPrinterParam2), traslator);
                 }
-            case "screen":
-                return new DeviceDisplayPanel();
-            case "window":
-                return new DeviceDisplayWindow();
             default:
                 return new DeviceDisplayNull();
         }

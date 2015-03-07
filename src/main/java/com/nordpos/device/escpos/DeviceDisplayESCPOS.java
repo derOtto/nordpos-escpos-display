@@ -67,8 +67,4 @@ public class DeviceDisplayESCPOS extends DeviceDisplaySerial {
         display.flush();
     }
 
-    @Override
-    public JComponent getDisplayComponent() {
-        return null;
-    }
 }
