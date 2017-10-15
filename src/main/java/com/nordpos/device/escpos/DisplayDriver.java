@@ -20,11 +20,11 @@
  */
 package com.nordpos.device.escpos;
 
-import com.nordpos.device.traslator.UnicodeTranslatorInt;
+import com.nordpos.device.translator.UnicodeTranslatorInt;
 import com.nordpos.device.display.DisplayInterface;
 import com.nordpos.device.display.DeviceDisplay;
 import com.nordpos.device.display.DeviceDisplayNull;
-import com.nordpos.device.traslator.UnicodeTranslator;
+import com.nordpos.device.translator.UnicodeTranslator;
 import com.nordpos.device.writter.WritterFile;
 import com.nordpos.device.writter.WritterRXTX;
 import com.nordpos.device.util.SerialPortParameters;

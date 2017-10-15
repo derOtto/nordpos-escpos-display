@@ -20,9 +20,8 @@ package com.nordpos.device.escpos;
 
 import com.nordpos.device.display.DeviceDisplaySerial;
 import com.nordpos.device.util.StringUtils;
-import com.nordpos.device.traslator.UnicodeTranslator;
+import com.nordpos.device.translator.UnicodeTranslator;
 import com.nordpos.device.writter.Writter;
-import javax.swing.JComponent;
 
 public class DeviceDisplayESCPOS extends DeviceDisplaySerial {
 

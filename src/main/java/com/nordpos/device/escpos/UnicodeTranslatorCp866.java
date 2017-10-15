@@ -25,7 +25,7 @@ package com.nordpos.device.escpos;
  * @author Andrey Svininykh <svininykh@gmail.com>
  * @version NORD POS 3
  */
-import com.nordpos.device.traslator.UnicodeTranslator;
+import com.nordpos.device.translator.UnicodeTranslator;
 
 public class UnicodeTranslatorCp866 extends UnicodeTranslator {
 
